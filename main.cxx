@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include "include/func.hpp"
 
 int main()
 {
+  includeFunction();
   if(SDL_Init(SDL_INIT_VIDEO) != 0){
     std::cout << "couldn't init\n"; return 1;
   }
