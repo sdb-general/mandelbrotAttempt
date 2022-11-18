@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <assert.h>
 #include "include/func.hpp"
+#include "include/complex.hpp"
 // http://lazyfoo.net/SDL_tutorials/lesson04/index.php
 
 SDL_Event event;
@@ -14,6 +15,10 @@ const int screenBPP = 32;
 
 int main()
 {
+
+  MandelBrot c {1,2};
+  c.display();
+
   if(SDL_Init(SDL_INIT_VIDEO) != 0){
     std::cout << "couldn't init\n"; return 1;
   }
