@@ -32,33 +32,7 @@ int main()
   // SDL_RenderClear(renderer);
   SDL_RenderPresent(lRenderer); //updates the window
 
-  float dW = numWidth / float(screenWidth), lW = -0.5 * numWidth; //local variable for width and its increment
-  float dH = numWidth / float(screenHeight), lH = -0.5 * numWidth;
-
-  std::vector<bool> lMandelHeightVect (screenHeight); //bool array for whether we have mandel or not
-
-  /*
-  my intention on the line below is to declare an empty object, like:
-    int i;
-  but i haven't worked out how to properly overload the constructor
-  */
-  Complex lComplex{0,0}; 
-  for (int widthIter = 0; widthIter < screenWidth; widthIter++, lW += dW) 
-  {
-    
-    lH = -0.5 * numWidth;
-    for (int heightIter = 0; heightIter < screenHeight; heightIter++, lH += dH)
-    {
-      //construct complex number
-      lComplex = Complex{lW, lH};
-      // if ( isMandelBrot(lComplex) ) SDL_RenderDrawPoint(lRenderer, widthIter, heightIter);
-      lMandelHeightVect[heightIter] = isMandelBrot(lComplex);
-    }
-    //render
-    lineRender(lRenderer, lMandelHeightVect, widthIter);
-  }
-
-  SDL_RenderPresent(lRenderer);
+  mandelDraw(lRenderer, screenWidth, screenHeight, numWidth);
 
   bool quit = false;
   while (quit == false){

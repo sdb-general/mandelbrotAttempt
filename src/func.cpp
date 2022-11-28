@@ -1,11 +1,17 @@
 #include "../include/func.hpp"
 #include <assert.h>
 #include <chrono>
-#include <mutex>
 #include "../include/complex.hpp"
 
+//threading
+#include <thread>
+#include <boost/asio.hpp>
+#include <mutex>
 
+const int Concurrency = std::thread::hardware_concurrency();
+// const int Concurrency = 4;
 std::mutex mutex;
+
 
 
 void includeFunction(){
@@ -83,6 +89,8 @@ void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDispl
 
 void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const float numWidth)
 {
+  std::cout << "concurrency is " << Concurrency << "\n";
+
   float dW = numWidth / float(aScreenWidth), lW = -0.5 * numWidth; //local variable for width and its increment
   float dH = numWidth / float(aScreenHeight), lH = -0.5 * numWidth;
 
