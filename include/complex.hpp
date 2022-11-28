@@ -1,5 +1,6 @@
 #pragma once
 
+
 /*
 ultimately 
 */
@@ -8,8 +9,28 @@ ultimately
 
 // struct Complex;
 
-class MandelBrot{
-public:
+// class MandelBrot{
+
+// public:
+//   const Complex mStartComplex;
+//   Complex mVariableComplex;
+
+//   const int mIters = 100;
+
+//   bool mMandel = 0;
+
+// public:
+//   //default constructor
+//   MandelBrot(float aReal, float aImag);
+
+//   float absolute() const;
+
+//   void display() const;
+
+//   void isMandelBrot();
+
+// };
+
   struct Complex{
     float mReal;
     float mImag;
@@ -30,31 +51,5 @@ public:
     float absolute() const;
   };
 
-public:
-  const Complex mStartComplex;
-  Complex mVariableComplex;
 
-  const int mIters = 100;
-
-  bool mMandel = 0;
-
-
-public:
-  //default constructor
-  MandelBrot(float aReal, float aImag);
-
-  // MandelBrot& operator+ (const MandelBrot& aOther);
-  // MandelBrot& operator+= (const MandelBrot& aOther);
-  // MandelBrot& operator- (const MandelBrot& aOther);
-  
-  // MandelBrot& operator* (const MandelBrot& aOther);
-  //add some others for other types
-
-  float absolute() const;
-
-  void display() const;
-
-  void isMandelBrot();
-
-};
-
+bool isMandelBrot(const Complex& aComplex);

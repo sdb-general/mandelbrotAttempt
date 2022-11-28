@@ -16,8 +16,6 @@ const int screenBPP = 32;
 int main()
 {
 
-  MandelBrot c {1,2};
-  c.display();
 
   if(SDL_Init(SDL_INIT_VIDEO) != 0){
     std::cout << "couldn't init\n"; return 1;
@@ -34,15 +32,6 @@ int main()
   SDL_RenderPresent(renderer); //updates the window
 
   drawCircle(renderer, 640/2, 480/2, 50);
-
-  // SDL_Delay(2000);
-
-  // SDL_Rect lRect = {640/4, 480/4, 640/4, 480/4};
-  // SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0);
-  // SDL_RenderDrawRect(renderer, &lRect);
-  // SDL_RenderPresent(renderer);
-
-
 
   bool quit = false;
   while (quit == false){
