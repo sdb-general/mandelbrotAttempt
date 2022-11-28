@@ -2,6 +2,8 @@
 #include <assert.h>
 #include <chrono>
 #include <mutex>
+#include "../include/complex.hpp"
+
 
 std::mutex mutex;
 
@@ -79,3 +81,33 @@ void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDispl
 }
 
 
+void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const float numWidth)
+{
+  float dW = numWidth / float(aScreenWidth), lW = -0.5 * numWidth; //local variable for width and its increment
+  float dH = numWidth / float(aScreenHeight), lH = -0.5 * numWidth;
+
+  std::vector<bool> lMandelHeightVect (aScreenHeight); //bool array for whether we have mandel or not
+
+  /*
+  my intention on the line below is to declare an empty object, like:
+    int i;
+  but i haven't worked out how to properly overload the constructor
+  */
+  Complex lComplex{0,0}; 
+  for (int widthIter = 0; widthIter < aScreenWidth; widthIter++, lW += dW) 
+  {
+    
+    lH = -0.5 * numWidth;
+    for (int heightIter = 0; heightIter < aScreenHeight; heightIter++, lH += dH)
+    {
+      //construct complex number
+      lComplex = Complex{lW, lH};
+      // if ( isMandelBrot(lComplex) ) SDL_RenderDrawPoint(lRenderer, widthIter, heightIter);
+      lMandelHeightVect[heightIter] = isMandelBrot(lComplex);
+    }
+    //render
+    lineRender(aRenderer, lMandelHeightVect, widthIter);
+  }
+
+  SDL_RenderPresent(aRenderer);
+}

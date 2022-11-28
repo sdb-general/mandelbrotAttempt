@@ -19,3 +19,5 @@ struct StopWatch
 };
 
 void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDisplacement);
+
+void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const float numWidth);
