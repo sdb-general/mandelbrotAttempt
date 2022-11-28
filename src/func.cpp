@@ -1,5 +1,10 @@
 #include "../include/func.hpp"
 #include <assert.h>
+#include <chrono>
+#include <mutex>
+
+std::mutex mutex;
+
 
 void includeFunction(){
   std::cout << "printing inside included function\n";
@@ -42,3 +47,35 @@ void drawCircle(SDL_Renderer* aRenderer, int32_t aX, int32_t aY, int32_t aR){
   }
   SDL_RenderPresent(aRenderer);
 }
+
+
+StopWatch::StopWatch( std::string message="")
+	{
+	if (message == "") {std::cout << " beginning counter\n";}
+	else {std::cout << " beginning " << message << std::endl; mMessage = message;}
+	mStartTime = std::chrono::high_resolution_clock::now();
+	}
+StopWatch::~StopWatch()
+	{
+	std::cout << "\n Ending operation";
+	if (mMessage!="") std::cout << " " << mMessage;
+	auto stop = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - mStartTime);
+	std::cout << ", time taken " << duration.count() << " milliseconds"<< std::endl;
+	}
+
+void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDisplacement) // vector of bools for if we should colour in or not
+{
+  mutex.lock();
+  int lIter = 0;
+  for (auto el : aMandel) 
+  {
+    if (el) SDL_RenderDrawPoint(aRenderer, aDisplacement, lIter);
+    lIter++;
+  //   std::cout << el << "\n";
+  //   abort();
+  }
+  mutex.unlock();
+}
+
+

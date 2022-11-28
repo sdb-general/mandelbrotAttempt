@@ -16,7 +16,7 @@ const float numWidth = 3;
 
 int main()
 {
-
+  // includeFunction();
   if(SDL_Init(SDL_INIT_VIDEO) != 0){
     std::cout << "couldn't init\n"; return 1;
   }
@@ -35,6 +35,8 @@ int main()
   float dW = numWidth / float(screenWidth), lW = -0.5 * numWidth; //local variable for width and its increment
   float dH = numWidth / float(screenHeight), lH = -0.5 * numWidth;
 
+  std::vector<bool> lMandelHeightVect (screenHeight); //bool array for whether we have mandel or not
+
   /*
   my intention on the line below is to declare an empty object, like:
     int i;
@@ -43,13 +45,17 @@ int main()
   Complex lComplex{0,0}; 
   for (int widthIter = 0; widthIter < screenWidth; widthIter++, lW += dW) 
   {
+    
     lH = -0.5 * numWidth;
     for (int heightIter = 0; heightIter < screenHeight; heightIter++, lH += dH)
     {
       //construct complex number
       lComplex = Complex{lW, lH};
-      if ( isMandelBrot(lComplex) ) SDL_RenderDrawPoint(lRenderer, widthIter, heightIter);
+      // if ( isMandelBrot(lComplex) ) SDL_RenderDrawPoint(lRenderer, widthIter, heightIter);
+      lMandelHeightVect[heightIter] = isMandelBrot(lComplex);
     }
+    //render
+    lineRender(lRenderer, lMandelHeightVect, widthIter);
   }
 
   SDL_RenderPresent(lRenderer);
