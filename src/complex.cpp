@@ -5,6 +5,7 @@
 
 const int gMaxIters = 100;
 
+
 Complex::Complex(float aReal = 0, float aImag = 0) : 
   mReal{aReal}, mImag{aImag}
 {}

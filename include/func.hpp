@@ -6,10 +6,3 @@ void includeFunction();
 
 void drawCircle(SDL_Renderer* aRenderer, int32_t aX, int32_t aY, int32_t aR);
 
-
-
-// class Pixels{
-// private:
-//   std::vector<int> mScreen;
-
-// }

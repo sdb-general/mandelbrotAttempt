@@ -5,17 +5,17 @@
 #include <assert.h>
 #include "include/func.hpp"
 #include "include/complex.hpp"
-// http://lazyfoo.net/SDL_tutorials/lesson04/index.php
 
 SDL_Event event;
 
-const int screenWidth = 800;
-const int screenHeight = 480;
+const int screenWidth = 1600;
+const int screenHeight = 900;
 const int screenBPP = 32;
+
+const float numWidth = 3;
 
 int main()
 {
-
 
   if(SDL_Init(SDL_INIT_VIDEO) != 0){
     std::cout << "couldn't init\n"; return 1;
@@ -25,13 +25,34 @@ int main()
                                         SDL_WINDOWPOS_UNDEFINED,
                                         screenWidth,screenHeight, 0);
   assert(screen);
-  SDL_Renderer* renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_SOFTWARE);
-  assert(renderer);
-  SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, 0x00); 
+  SDL_Renderer* lRenderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_SOFTWARE);
+  assert(lRenderer);
+  // SDL_SetRenderDrawColor(lRenderer, 0x00, 0xFF, 0x00, 0x00); 
+  SDL_SetRenderDrawColor(lRenderer, 0xFF, 0, 0, 255);
   // SDL_RenderClear(renderer);
-  SDL_RenderPresent(renderer); //updates the window
+  SDL_RenderPresent(lRenderer); //updates the window
 
-  drawCircle(renderer, 640/2, 480/2, 50);
+  float dW = numWidth / float(screenWidth), lW = -0.5 * numWidth; //local variable for width and its increment
+  float dH = numWidth / float(screenHeight), lH = -0.5 * numWidth;
+
+  /*
+  my intention on the line below is to declare an empty object, like:
+    int i;
+  but i haven't worked out how to properly overload the constructor
+  */
+  Complex lComplex{0,0}; 
+  for (int widthIter = 0; widthIter < screenWidth; widthIter++, lW += dW) 
+  {
+    lH = -0.5 * numWidth;
+    for (int heightIter = 0; heightIter < screenHeight; heightIter++, lH += dH)
+    {
+      //construct complex number
+      lComplex = Complex{lW, lH};
+      if ( isMandelBrot(lComplex) ) SDL_RenderDrawPoint(lRenderer, widthIter, heightIter);
+    }
+  }
+
+  SDL_RenderPresent(lRenderer);
 
   bool quit = false;
   while (quit == false){
