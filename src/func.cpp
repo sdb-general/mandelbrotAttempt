@@ -59,8 +59,8 @@ void drawCircle(SDL_Renderer* aRenderer, int32_t aX, int32_t aY, int32_t aR){
 
 StopWatch::StopWatch( std::string message="")
 	{
-	if (message == "") {std::cout << " beginning counter\n";}
-	else {std::cout << " beginning " << message << std::endl; mMessage = message;}
+	if (message == "") {std::cout << " Beginning counter\n";}
+	else {std::cout << " Beginning " << message << std::endl; mMessage = message;}
 	mStartTime = std::chrono::high_resolution_clock::now();
 	}
 StopWatch::~StopWatch()
@@ -89,30 +89,36 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
 {
   StopWatch s = StopWatch("Mandeldraw");
 
-  float dW = numWidth / float(aScreenWidth), lW = -0.5 * numWidth; //local variable for width and its increment
-  float dH = numWidth / float(aScreenHeight), lH = -0.5 * numWidth;
+  float dW = Concurrency * numWidth / float(aScreenWidth);  //local variable for width and its increment
+  float dH = numWidth / float(aScreenHeight);
 
-  std::vector<bool> lMandelHeightVect (aScreenHeight); //bool array for whether we have mandel or not
-
-  /*
-  my intention on the line below is to declare an empty object, like:
-    int i;
-  but i haven't worked out how to properly overload the constructor
-  */
-  Complex lComplex{0,0}; 
-  for (int widthIter = 0; widthIter < aScreenWidth; widthIter++, lW += dW) 
+  for (int offset = 0; offset < Concurrency; offset++)
+  // the below will be posted into the threadpool
   {
-    
-    lH = -0.5 * numWidth;
-    for (int heightIter = 0; heightIter < aScreenHeight; heightIter++, lH += dH)
+    boost::asio::post( pool, [&](){
+    // let's do it 
+    Complex lComplex{0,0};
+    std::vector<bool> lMandelHeightVect (aScreenHeight);
+    float lH;
+    float lW = -0.5 * numWidth;
+    for (int widthIter = offset; widthIter < aScreenWidth; widthIter += Concurrency, lW += dW)
     {
-      //construct complex number
-      lComplex = Complex{lW, lH};
-      lMandelHeightVect[heightIter] = isMandelBrot(lComplex);
+      lH = -0.5 * numWidth;
+      for (int heightIter = 0; heightIter < aScreenHeight; heightIter++, lH += dH)
+      {
+        //construct complex number
+        lComplex = Complex{lW, lH};
+        lMandelHeightVect[heightIter] = isMandelBrot(lComplex);
+      }
+      //render
+      lineRender(aRenderer, lMandelHeightVect, widthIter);
+    };
     }
-    //render
-    lineRender(aRenderer, lMandelHeightVect, widthIter);
+    );
   }
 
+  pool.join();
+
+  std::cout << " Rendering\n";
   SDL_RenderPresent(aRenderer);
 }
