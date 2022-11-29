@@ -9,7 +9,7 @@
 #include <mutex>
 
 const int Concurrency = std::thread::hardware_concurrency();
-// const int Concurrency = 4;
+// const int Concurrency = 1;
 std::mutex mutex;
 boost::asio::thread_pool pool(Concurrency);
 

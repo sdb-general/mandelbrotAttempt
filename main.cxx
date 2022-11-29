@@ -59,8 +59,8 @@ int main(int argc, const char *argv[])
   assert(screen);
   SDL_Renderer* lRenderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_SOFTWARE);
   assert(lRenderer);
-  // SDL_SetRenderDrawColor(lRenderer, 0x00, 0xFF, 0x00, 0x00); 
-  SDL_SetRenderDrawColor(lRenderer, 0xFF, 0, 0, 255);
+  SDL_SetRenderDrawColor(lRenderer, 86, 29, 94, 0xFF); 
+  // SDL_SetRenderDrawColor(lRenderer, 0xFF, 0, 0, 255);
   // SDL_RenderClear(renderer);
   SDL_RenderPresent(lRenderer); //updates the window
 
