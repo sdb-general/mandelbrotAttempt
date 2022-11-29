@@ -1,7 +1,7 @@
 # appname := game
 
 # CXX := g++
-CXXFLAGS := -std=c++11 -pthread $(shell pkg-config --cflags sdl2)
+CXXFLAGS := -std=c++11 -pthread $(shell pkg-config --cflags sdl2) -l boost_program_options
 LDFLAGS = $(shell pkg-config --libs sdl2)
 
 game.exe: main.cxx src/*.cpp include/*.hpp

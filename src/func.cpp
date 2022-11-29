@@ -89,7 +89,7 @@ void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDispl
 }
 
 // this function is where it all happens
-void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const double numWidth)
+void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const double numWidth, const std::pair<double, double> centre)
 {
   StopWatch s = StopWatch("Mandeldraw");
 
@@ -104,10 +104,10 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
       Complex lComplex{0,0};
       std::vector<bool> lMandelHeightVect (aScreenHeight);
       double lH;
-      double lW = -0.5 * numWidth +  dW * offset / Concurrency; //ensures correct starting point
+      double lW = centre.first -0.5 * numWidth +  dW * offset / Concurrency; //ensures correct starting point
       for (int widthIter = offset; widthIter < aScreenWidth; widthIter += Concurrency, lW += dW)
         {
-          lH = -0.5 * numWidth;
+          lH = centre.second -0.5 * numWidth;
           for (int heightIter = 0; heightIter < aScreenHeight; heightIter++, lH += dH)
           {
             //construct complex number
