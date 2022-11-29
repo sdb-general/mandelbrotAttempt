@@ -11,7 +11,7 @@
 const int Concurrency = std::thread::hardware_concurrency();
 // const int Concurrency = 4;
 std::mutex mutex;
-
+boost::asio::thread_pool pool(Concurrency);
 
 
 void includeFunction(){
@@ -65,8 +65,8 @@ StopWatch::StopWatch( std::string message="")
 	}
 StopWatch::~StopWatch()
 	{
-	std::cout << "\n Ending operation";
-	if (mMessage!="") std::cout << " " << mMessage;
+	std::cout << "\n Ending operation ";
+	if (mMessage!="") std::cout << mMessage;
 	auto stop = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - mStartTime);
 	std::cout << ", time taken " << duration.count() << " milliseconds"<< std::endl;
@@ -80,16 +80,14 @@ void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDispl
   {
     if (el) SDL_RenderDrawPoint(aRenderer, aDisplacement, lIter);
     lIter++;
-  //   std::cout << el << "\n";
-  //   abort();
   }
   mutex.unlock();
 }
 
-
+// this function is where it all happens
 void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const float numWidth)
 {
-  std::cout << "concurrency is " << Concurrency << "\n";
+  StopWatch s = StopWatch("Mandeldraw");
 
   float dW = numWidth / float(aScreenWidth), lW = -0.5 * numWidth; //local variable for width and its increment
   float dH = numWidth / float(aScreenHeight), lH = -0.5 * numWidth;
@@ -110,7 +108,6 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
     {
       //construct complex number
       lComplex = Complex{lW, lH};
-      // if ( isMandelBrot(lComplex) ) SDL_RenderDrawPoint(lRenderer, widthIter, heightIter);
       lMandelHeightVect[heightIter] = isMandelBrot(lComplex);
     }
     //render

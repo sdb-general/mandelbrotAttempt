@@ -3,7 +3,7 @@
 #include <cmath>
 
 
-const int gMaxIters = 100;
+const int gMaxIters = 500;
 
 
 Complex::Complex(float aReal = 0, float aImag = 0) : 
@@ -55,22 +55,12 @@ float Complex::absolute() const{
 bool isMandelBrot(const Complex& aComplex){
   Complex lComplex{}, lLastComplex{};
   for (int lIter = 0; lIter < gMaxIters; lIter++){    
-    // std::cout << "\n\tlcomplex "; lComplex.display();
-    // std::cout << "\n\tlLastComplex "; lLastComplex.display();
     if (lComplex.absolute() > 2) return false; // change this to abs val of local complex number
     lComplex = lLastComplex * lLastComplex; //starts at 0, this performs iterative step
     lComplex += aComplex;
-    // std::cout << "\n\tlcomplex "; lComplex.display();
-    // std::cout << "\n\tlLastComplex "; lLastComplex.display();
-    // std::cout << "diff is " << (lComplex - lLastComplex).absolute() << "\n";
     if ((lComplex - lLastComplex).absolute() < 1E-7) break;
-    lLastComplex = lComplex;
-    // std::cout << "\nmade it to round " << lIter << "\n";
-    
+    lLastComplex = lComplex;  
   }
-  // lComplex.display();
-  // std::cout << "made it to end, lcomplex has size "; lComplex.absolute();
-  // std::cout << lComplex.mReal << "\n";
   if (lComplex.absolute() < 2) return true;
   else return false;
 }
