@@ -8,11 +8,11 @@
 
 SDL_Event event;
 
-const int screenWidth = 800;
-const int screenHeight = 800;
+const int screenWidth = 1900;
+const int screenHeight = 1000;
 const int screenBPP = 32;
 
-const float numWidth = 3;
+const float numWidth = 2;
 
 int main()
 {
@@ -20,7 +20,7 @@ int main()
   if(SDL_Init(SDL_INIT_VIDEO) != 0){
     std::cout << "couldn't init\n"; return 1;
   }
-  SDL_Window* screen = SDL_CreateWindow("my application",
+  SDL_Window* screen = SDL_CreateWindow("mandelbrot",
                                         SDL_WINDOWPOS_UNDEFINED,
                                         SDL_WINDOWPOS_UNDEFINED,
                                         screenWidth,screenHeight, 0);

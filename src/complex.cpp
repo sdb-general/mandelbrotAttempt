@@ -3,7 +3,7 @@
 #include <cmath>
 
 
-const int gMaxIters = 200;
+const int gMaxIters = 500;
 
 
 Complex::Complex(float aReal = 0, float aImag = 0) : 
