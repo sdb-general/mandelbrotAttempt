@@ -6,7 +6,7 @@
 const int gMaxIters = 500;
 
 
-Complex::Complex(float aReal = 0, float aImag = 0) : 
+Complex::Complex(double aReal = 0, double aImag = 0) : 
   mReal{aReal}, mImag{aImag}
 {}
 
@@ -26,16 +26,16 @@ void Complex::display() const{
 }
 
 Complex Complex::operator* ( const Complex& aOther ){
-  float lReal = mReal * aOther.mReal - mImag * aOther.mImag;
+  double lReal = mReal * aOther.mReal - mImag * aOther.mImag;
   //we can directly set mImag since we haven't modified mReal yet
-  float lImag = mReal * aOther.mImag + mImag * aOther.mReal;
+  double lImag = mReal * aOther.mImag + mImag * aOther.mReal;
   // mReal = lReal;
   return Complex(lReal, lImag);
 }
 
 Complex Complex::operator- ( const Complex& aOther ){
-  float lReal = mReal - aOther.mReal;
-  float lImag = mImag - aOther.mImag;
+  double lReal = mReal - aOther.mReal;
+  double lImag = mImag - aOther.mImag;
   return Complex(lReal, lImag);
 }
 
@@ -46,7 +46,7 @@ Complex& Complex::operator+= ( const Complex& aOther ){
   return *this;
 }
 
-float Complex::absolute() const{
+double Complex::absolute() const{
   return mReal * mReal + mImag * mImag;
 }
 

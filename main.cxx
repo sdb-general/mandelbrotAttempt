@@ -12,7 +12,7 @@ const int screenWidth = 1900;
 const int screenHeight = 1000;
 const int screenBPP = 32;
 
-const float numWidth = 2;
+const double numWidth = 3;
 
 int main()
 {

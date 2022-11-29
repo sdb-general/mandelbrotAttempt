@@ -89,12 +89,12 @@ void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDispl
 }
 
 // this function is where it all happens
-void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const float numWidth)
+void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const double numWidth)
 {
   StopWatch s = StopWatch("Mandeldraw");
 
-  const float dW = Concurrency * numWidth / float(aScreenWidth) ;  //local variable for width and its increment
-  const float dH = numWidth / float(aScreenHeight);
+  const double dW = Concurrency * numWidth / double(aScreenWidth) ;  //local variable for width and its increment
+  const double dH = numWidth / double(aScreenHeight);
 
   for (int offset = 0; offset < Concurrency; offset++)
   // the below will be posted into the threadpool
@@ -103,8 +103,8 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
     // let's do it 
       Complex lComplex{0,0};
       std::vector<bool> lMandelHeightVect (aScreenHeight);
-      float lH;
-      float lW = -0.5 * numWidth +  dW * offset / Concurrency; //ensures correct starting point
+      double lH;
+      double lW = -0.5 * numWidth +  dW * offset / Concurrency; //ensures correct starting point
       for (int widthIter = offset; widthIter < aScreenWidth; widthIter += Concurrency, lW += dW)
         {
           lH = -0.5 * numWidth;
