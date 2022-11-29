@@ -8,8 +8,8 @@
 
 SDL_Event event;
 
-const int screenWidth = 1600;
-const int screenHeight = 900;
+const int screenWidth = 800;
+const int screenHeight = 800;
 const int screenBPP = 32;
 
 const float numWidth = 3;

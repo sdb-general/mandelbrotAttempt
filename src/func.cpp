@@ -59,17 +59,21 @@ void drawCircle(SDL_Renderer* aRenderer, int32_t aX, int32_t aY, int32_t aR){
 
 StopWatch::StopWatch( std::string message="")
 	{
+  std::cout << "+-----------------+\n";
 	if (message == "") {std::cout << " Beginning counter\n";}
 	else {std::cout << " Beginning " << message << std::endl; mMessage = message;}
+  std::cout << "+-----------------+\n";
 	mStartTime = std::chrono::high_resolution_clock::now();
 	}
 StopWatch::~StopWatch()
 	{
-	std::cout << "\n Ending operation ";
+  std::cout << "+-----------------+\n";
+	std::cout << " Ending operation ";
 	if (mMessage!="") std::cout << mMessage;
 	auto stop = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - mStartTime);
 	std::cout << ", time taken " << duration.count() << " milliseconds"<< std::endl;
+  std::cout << "+-----------------+\n";
 	}
 
 void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDisplacement) // vector of bools for if we should colour in or not
@@ -89,7 +93,7 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
 {
   StopWatch s = StopWatch("Mandeldraw");
 
-  const float dW = Concurrency * numWidth / float(aScreenWidth);  //local variable for width and its increment
+  const float dW = Concurrency * numWidth / float(aScreenWidth) ;  //local variable for width and its increment
   const float dH = numWidth / float(aScreenHeight);
 
   for (int offset = 0; offset < Concurrency; offset++)
@@ -100,8 +104,7 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
       Complex lComplex{0,0};
       std::vector<bool> lMandelHeightVect (aScreenHeight);
       float lH;
-      float lW = -0.5 * numWidth;
-      std::cout << offset << "\n";
+      float lW = -0.5 * numWidth +  dW * offset / Concurrency; //ensures correct starting point
       for (int widthIter = offset; widthIter < aScreenWidth; widthIter += Concurrency, lW += dW)
         {
           lH = -0.5 * numWidth;
