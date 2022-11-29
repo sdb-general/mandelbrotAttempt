@@ -89,30 +89,31 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
 {
   StopWatch s = StopWatch("Mandeldraw");
 
-  float dW = Concurrency * numWidth / float(aScreenWidth);  //local variable for width and its increment
-  float dH = numWidth / float(aScreenHeight);
+  const float dW = Concurrency * numWidth / float(aScreenWidth);  //local variable for width and its increment
+  const float dH = numWidth / float(aScreenHeight);
 
   for (int offset = 0; offset < Concurrency; offset++)
   // the below will be posted into the threadpool
   {
-    boost::asio::post( pool, [&](){
+    boost::asio::post( pool, [&, offset](){
     // let's do it 
-    Complex lComplex{0,0};
-    std::vector<bool> lMandelHeightVect (aScreenHeight);
-    float lH;
-    float lW = -0.5 * numWidth;
-    for (int widthIter = offset; widthIter < aScreenWidth; widthIter += Concurrency, lW += dW)
-    {
-      lH = -0.5 * numWidth;
-      for (int heightIter = 0; heightIter < aScreenHeight; heightIter++, lH += dH)
-      {
-        //construct complex number
-        lComplex = Complex{lW, lH};
-        lMandelHeightVect[heightIter] = isMandelBrot(lComplex);
-      }
-      //render
-      lineRender(aRenderer, lMandelHeightVect, widthIter);
-    };
+      Complex lComplex{0,0};
+      std::vector<bool> lMandelHeightVect (aScreenHeight);
+      float lH;
+      float lW = -0.5 * numWidth;
+      std::cout << offset << "\n";
+      for (int widthIter = offset; widthIter < aScreenWidth; widthIter += Concurrency, lW += dW)
+        {
+          lH = -0.5 * numWidth;
+          for (int heightIter = 0; heightIter < aScreenHeight; heightIter++, lH += dH)
+          {
+            //construct complex number
+            lComplex = Complex{lW, lH};
+            lMandelHeightVect[heightIter] = isMandelBrot(lComplex);
+          }
+          //render
+          lineRender(aRenderer, lMandelHeightVect, widthIter);
+        };
     }
     );
   }
