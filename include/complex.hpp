@@ -11,6 +11,7 @@ struct Complex{
 
     // need a constrcutor that defaults to 0
     Complex(double aReal, double aImag);
+    Complex() = default;
 
 
     Complex(const Complex& aOther);
