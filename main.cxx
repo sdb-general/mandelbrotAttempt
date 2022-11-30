@@ -6,6 +6,10 @@
 #include "include/func.hpp"
 #include "include/complex.hpp"
 
+// #include <chrono>
+// #include <thread>
+
+
 #include "boost/program_options.hpp"
 using namespace boost::program_options;
 SDL_Event event;
@@ -14,9 +18,14 @@ const int screenWidth = 1600;
 const int screenHeight = 900;
 const int screenBPP = 32;
 
-// const double numWidth = 0.5;
+/*
 
-// const std::pair<double, double> centre {-0.8,-0.2};
+what if we made a pendulum 
+and updated the screen 30 times
+per second on another thread
+
+*/
+
 
 int main(int argc, const char *argv[])
 {

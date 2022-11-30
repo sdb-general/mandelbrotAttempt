@@ -85,6 +85,7 @@ void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDispl
     if (el) SDL_RenderDrawPoint(aRenderer, aDisplacement, lIter);
     lIter++;
   }
+  SDL_RenderPresent(aRenderer);
   mutex.unlock();
 }
 
@@ -117,7 +118,7 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
           //render
           lineRender(aRenderer, lMandelHeightVect, widthIter);
         };
-    }
+      }
     );
   }
 
