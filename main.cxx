@@ -6,8 +6,6 @@
 #include "include/func.hpp"
 #include "include/complex.hpp"
 
-// #include <chrono>
-// #include <thread>
 
 
 #include "boost/program_options.hpp"
@@ -17,14 +15,6 @@ SDL_Event event;
 const int screenWidth = 1600;
 const int screenHeight = 900;
 const int screenBPP = 32;
-
-/*
-
-what if we made a pendulum 
-and updated the screen 30 times
-per second on another thread
-
-*/
 
 
 int main(int argc, const char *argv[])
@@ -73,6 +63,7 @@ int main(int argc, const char *argv[])
   // SDL_RenderClear(renderer);
   SDL_RenderPresent(lRenderer); //updates the window
 
+  //here is where the main rendering occurs
   mandelDraw(lRenderer, screenWidth, screenHeight, numWidth, centre);
 
   bool quit = false;

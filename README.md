@@ -12,5 +12,6 @@ This branch can accept some command-line arguments, such as below:
 
 There is lots to do, still, namely:
   Tidy up and refactor everything
+  Add a lot of comments
   Move the threadpool to a separate file 
   Optimise calculation of Mandelbrot numbers
