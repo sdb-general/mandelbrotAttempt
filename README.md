@@ -19,3 +19,5 @@ There is lots to do, still, namely:
   Move the threadpool to a separate file 
 
   Optimise calculation of Mandelbrot numbers 
+
+  In particular - refactor to avoid calculating one Mandelbrot number for each pixel.
