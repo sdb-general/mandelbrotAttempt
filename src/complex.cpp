@@ -54,14 +54,15 @@ double Complex::absolute() const{
 
 bool isMandelBrot(const Complex& aComplex){
   Complex lComplex{}, lLastComplex{};
-  for (int lIter = 0; lIter < gMaxIters; lIter++){    
-    if (lComplex.absolute() > 2) return false; // change this to abs val of local complex number
+  int lIter = 0;
+  while ( (lIter < gMaxIters) and (lComplex.absolute() < 4))
+  {    
     lComplex = lLastComplex * lLastComplex; //starts at 0, this performs iterative step
     lComplex += aComplex;
     if ((lComplex - lLastComplex).absolute() < 1E-7) break;
     lLastComplex = lComplex;  
+    lIter++;
   }
-  if (lComplex.absolute() < 2) return true;
-  else return false;
+  return (lComplex.absolute() < 2);
 }
 
