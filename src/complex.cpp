@@ -63,6 +63,6 @@ bool isMandelBrot(const Complex& aComplex){
     lLastComplex = lComplex;  
     lIter++;
   }
-  return (lComplex.absolute() < 2);
+  return (lComplex.absolute() < 4);
 }
 
