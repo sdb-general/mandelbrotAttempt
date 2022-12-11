@@ -91,10 +91,15 @@ void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDispl
 
 void blockRender(SDL_Renderer* aRenderer, std::vector<std::vector<bool>>& aScreen, const int aScreenWidth, const int aScreenHeight, int PIXELSCALEFACTOR)
 {
+  std::cout << "aScreen.size() = " << aScreen.size() << "\n";
+  std::cout << "aScreen[0].size() = "<<aScreen[0].size() << "\n";
+  std::cout << aScreenWidth / PIXELSCALEFACTOR << "\n";
+  std::cout << aScreenHeight / PIXELSCALEFACTOR << "\n";
   for (int w = 0 ; w < aScreenWidth; w ++)
     for (int h = 0; h < aScreenHeight; h ++)
     {
       //scale back up!
+      std::cout << "w = " << w << ", h = " << h << "\n";
       if (aScreen[w / PIXELSCALEFACTOR][h / PIXELSCALEFACTOR]) SDL_RenderDrawPoint(aRenderer, w, h);
     }
 
