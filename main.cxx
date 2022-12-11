@@ -13,6 +13,7 @@ SDL_Event event;
 
 
 const int screenBPP = 32;
+const int PIXELSCALEFACTOR = 4;
 
 
 int main(int argc, const char *argv[])
@@ -65,9 +66,9 @@ int main(int argc, const char *argv[])
   // SDL_SetRenderDrawColor(lRenderer, 0xFF, 0, 0, 255);
   // SDL_RenderClear(renderer);
   SDL_RenderPresent(lRenderer); //updates the window
-
+  
   //here is where the main rendering occurs
-  mandelDraw(lRenderer, screenWidth, screenHeight, numWidth, centre);
+  mandelDraw(lRenderer, screenWidth, screenHeight, PIXELSCALEFACTOR, numWidth, centre);
 
   bool quit = false;
   while (quit == false){

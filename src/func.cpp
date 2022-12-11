@@ -89,28 +89,36 @@ void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDispl
   mutex.unlock();
 }
 
-void blockRender(SDL_Renderer* aRenderer, std::vector<std::vector<bool>>& aScreen, const int aScreenWidth, const int aScreenHeight)
+void blockRender(SDL_Renderer* aRenderer, std::vector<std::vector<bool>>& aScreen, const int aScreenWidth, const int aScreenHeight, int PIXELSCALEFACTOR)
 {
   for (int w = 0 ; w < aScreenWidth; w ++)
     for (int h = 0; h < aScreenHeight; h ++)
     {
-      if (aScreen[w][h]) SDL_RenderDrawPoint(aRenderer, w, h);
+      //scale back up!
+      if (aScreen[w / PIXELSCALEFACTOR][h / PIXELSCALEFACTOR]) SDL_RenderDrawPoint(aRenderer, w, h);
     }
 
 }
 
 
 // this function is where it all happens
-void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const double numWidth, const std::pair<double, double> centre)
+void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const int PIXELSCALEFACTOR, const double numWidth, const std::pair<double, double> centre)
 {
   StopWatch s = StopWatch("Mandeldraw");
   
+  //scaling the operation down by our pixel scale factor
+
+  int lScaledHeight = aScreenHeight / PIXELSCALEFACTOR;
+  int lScaledWidth = aScreenWidth / PIXELSCALEFACTOR;
+
   std::vector<std::vector<bool>> lScreen (
-    aScreenWidth, std::vector<bool>(aScreenHeight) 
+    lScaledWidth, std::vector<bool>(lScaledHeight) 
   );
 
-  const double dW = Concurrency * numWidth / double(aScreenWidth) ;  //local variable for width and its increment
-  const double dH = numWidth / double(aScreenHeight);
+
+
+  const double dW = Concurrency * numWidth / double(lScaledWidth) ;  //local variable for width and its increment
+  const double dH = numWidth / double(lScaledHeight);
 
   for (int offset = 0; offset < Concurrency; offset++)
   // the below will be posted into the threadpool
@@ -118,19 +126,17 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
     boost::asio::post( pool, [&, offset](){
     // let's do it 
       // Complex lComplex{0,0};
-      std::vector<bool> lMandelHeightVect (aScreenHeight);
+      std::cout << offset << "\n";
+      std::vector<bool> lMandelHeightVect (lScaledHeight);
       double lH;
       double lW = centre.first -0.5 * numWidth +  dW * offset / Concurrency; //ensures correct starting point
-      for (int widthIter = offset; widthIter < aScreenWidth; widthIter += Concurrency, lW += dW)
+      for (int widthIter = offset; widthIter < aScreenWidth/ PIXELSCALEFACTOR; widthIter += Concurrency, lW += dW)
         {
           lH = centre.second -0.5 * numWidth;
-          for (int heightIter = 0; heightIter < aScreenHeight; heightIter++, lH += dH)
+          for (int heightIter = 0; heightIter < lScaledHeight; heightIter++, lH += dH)
           {
-            //construct complex number
-            // lComplex = Complex{lW, lH};
             lScreen[widthIter][heightIter] =  isMandelBrot(Complex{lW, lH});;
           }
-          //render
         };
       }
     );
@@ -140,6 +146,6 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
 
   std::cout << " Rendering\n";
 
-  blockRender(aRenderer, lScreen, aScreenWidth, aScreenHeight);
+  blockRender(aRenderer, lScreen, aScreenWidth, aScreenHeight, PIXELSCALEFACTOR);
   SDL_RenderPresent(aRenderer);
 }
