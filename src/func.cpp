@@ -91,15 +91,11 @@ void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDispl
 
 void blockRender(SDL_Renderer* aRenderer, std::vector<std::vector<bool>>& aScreen, const int aScreenWidth, const int aScreenHeight, int PIXELSCALEFACTOR)
 {
-  std::cout << "aScreen.size() = " << aScreen.size() << "\n";
-  std::cout << "aScreen[0].size() = "<<aScreen[0].size() << "\n";
-  std::cout << aScreenWidth / PIXELSCALEFACTOR << "\n";
-  std::cout << aScreenHeight / PIXELSCALEFACTOR << "\n";
+
   for (int w = 0 ; w < aScreenWidth; w ++)
     for (int h = 0; h < aScreenHeight; h ++)
     {
       //scale back up!
-      std::cout << "w = " << w << ", h = " << h << "\n";
       if (aScreen[w / PIXELSCALEFACTOR][h / PIXELSCALEFACTOR]) SDL_RenderDrawPoint(aRenderer, w, h);
     }
 
@@ -120,8 +116,6 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
     lScaledWidth, std::vector<bool>(lScaledHeight) 
   );
 
-
-
   const double dW = Concurrency * numWidth / double(lScaledWidth) ;  //local variable for width and its increment
   const double dH = numWidth / double(lScaledHeight);
 
@@ -129,8 +123,7 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
   // the below will be posted into the threadpool
   {
     boost::asio::post( pool, [&, offset](){
-    // let's do it 
-      // Complex lComplex{0,0};
+
       std::cout << offset << "\n";
       std::vector<bool> lMandelHeightVect (lScaledHeight);
       double lH;

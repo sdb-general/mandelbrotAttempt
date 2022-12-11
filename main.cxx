@@ -13,7 +13,7 @@ SDL_Event event;
 
 
 const int screenBPP = 32;
-const int PIXELSCALEFACTOR = 4;
+// const int PIXELSCALEFACTOR = 4;
 
 
 int main(int argc, const char *argv[])
@@ -29,7 +29,8 @@ int main(int argc, const char *argv[])
       ("centrey", value<double>()->default_value(0), "CentreY")
       ("zoom", value<double>()->default_value(3), "Zoom" )
       ("sw", value<int>() -> default_value(1600), "Screen Width")
-      ("sh", value<int>() -> default_value(900), "Screen Height");
+      ("sh", value<int>() -> default_value(900), "Screen Height")
+      ("scale", value<int>()->default_value(4), "Scale" );
 
     
     store(parse_command_line(argc, argv, desc), vm);
@@ -48,8 +49,10 @@ int main(int argc, const char *argv[])
                                           vm["centrey"].as<double>()
                                           };
 
-  const int screenWidth = vm["sw"].as<int>();
-  const int screenHeight = vm["sh"].as<int>();;
+  const int screenWidth = vm["sw"].as<int>() % 2 == 0 ? vm["sw"].as<int>() : vm["sw"].as<int>() + 1;
+  const int screenHeight = vm["sh"].as<int>()% 2 == 0 ? vm["sh"].as<int>() : vm["sh"].as<int>() + 1;
+
+  const int PIXELSCALEFACTOR = vm["scale"].as<int>();
 
   // includeFunction();
   if(SDL_Init(SDL_INIT_VIDEO) != 0){
