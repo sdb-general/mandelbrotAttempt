@@ -108,8 +108,8 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
   
   //scaling the operation down by our pixel scale factor
 
-  int lScaledHeight = aScreenHeight / PIXELSCALEFACTOR;
-  int lScaledWidth = aScreenWidth / PIXELSCALEFACTOR;
+  const int lScaledHeight = aScreenHeight / PIXELSCALEFACTOR;
+  const int lScaledWidth = aScreenWidth / PIXELSCALEFACTOR;
 
   std::vector<std::vector<bool>> lScreen (
     lScaledWidth, std::vector<bool>(lScaledHeight) 
