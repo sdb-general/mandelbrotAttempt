@@ -11,8 +11,7 @@
 using namespace boost::program_options;
 SDL_Event event;
 
-const int screenWidth = 1600;
-const int screenHeight = 900;
+
 const int screenBPP = 32;
 
 
@@ -27,7 +26,9 @@ int main(int argc, const char *argv[])
     desc.add_options()
       ("centrex", value<double>()->default_value(0), "CentreX")
       ("centrey", value<double>()->default_value(0), "CentreY")
-      ("zoom", value<double>()->default_value(3), "Zoom" );
+      ("zoom", value<double>()->default_value(3), "Zoom" )
+      ("sw", value<int>() -> default_value(1600), "Screen Width")
+      ("sh", value<int>() -> default_value(900), "Screen Height");
 
     
     store(parse_command_line(argc, argv, desc), vm);
@@ -45,6 +46,9 @@ int main(int argc, const char *argv[])
                                           vm["centrex"].as<double>(),
                                           vm["centrey"].as<double>()
                                           };
+
+  const int screenWidth = vm["sw"].as<int>();
+  const int screenHeight = vm["sh"].as<int>();;
 
   // includeFunction();
   if(SDL_Init(SDL_INIT_VIDEO) != 0){
