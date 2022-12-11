@@ -89,10 +89,25 @@ void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDispl
   mutex.unlock();
 }
 
+void blockRender(SDL_Renderer* aRenderer, std::vector<std::vector<bool>>& aScreen, const int aScreenWidth, const int aScreenHeight)
+{
+  for (int w = 0 ; w < aScreenWidth; w ++)
+    for (int h = 0; h < aScreenHeight; h ++)
+    {
+      if (aScreen[w][h]) SDL_RenderDrawPoint(aRenderer, w, h);
+    }
+
+}
+
+
 // this function is where it all happens
 void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const double numWidth, const std::pair<double, double> centre)
 {
   StopWatch s = StopWatch("Mandeldraw");
+  
+  std::vector<std::vector<bool>> lScreen (
+    aScreenWidth, std::vector<bool>(aScreenHeight) 
+  );
 
   const double dW = Concurrency * numWidth / double(aScreenWidth) ;  //local variable for width and its increment
   const double dH = numWidth / double(aScreenHeight);
@@ -113,10 +128,9 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
           {
             //construct complex number
             // lComplex = Complex{lW, lH};
-            lMandelHeightVect[heightIter] =  isMandelBrot(Complex{lW, lH});;
+            lScreen[widthIter][heightIter] =  isMandelBrot(Complex{lW, lH});;
           }
           //render
-          lineRender(aRenderer, lMandelHeightVect, widthIter);
         };
       }
     );
@@ -125,5 +139,7 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
   pool.join();
 
   std::cout << " Rendering\n";
+
+  blockRender(aRenderer, lScreen, aScreenWidth, aScreenHeight);
   SDL_RenderPresent(aRenderer);
 }
