@@ -130,7 +130,7 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
       std::vector<bool> lMandelHeightVect (lScaledHeight);
       double lH;
       double lW = centre.first -0.5 * numWidth +  dW * offset / Concurrency; //ensures correct starting point
-      for (int widthIter = offset; widthIter < aScreenWidth/ PIXELSCALEFACTOR; widthIter += Concurrency, lW += dW)
+      for (int widthIter = offset; widthIter < lScaledWidth; widthIter += Concurrency, lW += dW)
         {
           lH = centre.second -0.5 * numWidth;
           for (int heightIter = 0; heightIter < lScaledHeight; heightIter++, lH += dH)
