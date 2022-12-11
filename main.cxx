@@ -30,7 +30,7 @@ int main(int argc, const char *argv[])
       ("zoom", value<double>()->default_value(3), "Zoom" )
       ("sw", value<int>() -> default_value(1600), "Screen Width")
       ("sh", value<int>() -> default_value(900), "Screen Height")
-      ("scale", value<int>()->default_value(4), "Scale" );
+      ("scale", value<double>()->default_value(1.0), "Scale" );
 
     
     store(parse_command_line(argc, argv, desc), vm);
@@ -42,6 +42,12 @@ int main(int argc, const char *argv[])
     abort();
   }
 
+/*
+
+SETTING CONFIGS -----------------------------------------------------------------------
+
+*/
+
   const double numWidth = vm["zoom"].as<double>();
 
   const std::pair<double, double> centre {
@@ -52,9 +58,15 @@ int main(int argc, const char *argv[])
   const int screenWidth = vm["sw"].as<int>() % 2 == 0 ? vm["sw"].as<int>() : vm["sw"].as<int>() + 1;
   const int screenHeight = vm["sh"].as<int>()% 2 == 0 ? vm["sh"].as<int>() : vm["sh"].as<int>() + 1;
 
-  const int PIXELSCALEFACTOR = vm["scale"].as<int>();
+  const double PIXELSCALEFACTOR = vm["scale"].as<double>();
 
-  // includeFunction();
+/*
+
+SETTING   SCREEN -----------------------------------------------------------------------
+
+*/
+
+
   if(SDL_Init(SDL_INIT_VIDEO) != 0){
     std::cout << "couldn't init\n"; return 1;
   }
@@ -70,7 +82,14 @@ int main(int argc, const char *argv[])
   // SDL_RenderClear(renderer);
   SDL_RenderPresent(lRenderer); //updates the window
   
-  //here is where the main rendering occurs
+/*
+
+RENDERING -----------------------------------------------------------------------
+
+*/
+
+
+
   mandelDraw(lRenderer, screenWidth, screenHeight, PIXELSCALEFACTOR, numWidth, centre);
 
   bool quit = false;

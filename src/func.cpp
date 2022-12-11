@@ -89,7 +89,7 @@ void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDispl
   mutex.unlock();
 }
 
-void blockRender(SDL_Renderer* aRenderer, std::vector<std::vector<bool>>& aScreen, const int aScreenWidth, const int aScreenHeight, int PIXELSCALEFACTOR)
+void blockRender(SDL_Renderer* aRenderer, std::vector<std::vector<bool>>& aScreen, const int aScreenWidth, const int aScreenHeight, double PIXELSCALEFACTOR)
 {
 
   for (int w = 0 ; w < aScreenWidth; w ++)
@@ -103,14 +103,14 @@ void blockRender(SDL_Renderer* aRenderer, std::vector<std::vector<bool>>& aScree
 
 
 // this function is where it all happens
-void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const int PIXELSCALEFACTOR, const double numWidth, const std::pair<double, double> centre)
+void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const double PIXELSCALEFACTOR, const double numWidth, const std::pair<double, double> centre)
 {
   StopWatch s = StopWatch("Mandeldraw");
   
   //scaling the operation down by our pixel scale factor
 
-  const int lScaledHeight = aScreenHeight / PIXELSCALEFACTOR;
-  const int lScaledWidth = aScreenWidth / PIXELSCALEFACTOR;
+  const int lScaledHeight = aScreenHeight / PIXELSCALEFACTOR + 1;
+  const int lScaledWidth = aScreenWidth / PIXELSCALEFACTOR + 1; //trying to fix the end - of - array problem
 
   std::vector<std::vector<bool>> lScreen (
     lScaledWidth, std::vector<bool>(lScaledHeight) 
