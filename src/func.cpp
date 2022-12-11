@@ -102,7 +102,7 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
   {
     boost::asio::post( pool, [&, offset](){
     // let's do it 
-      Complex lComplex{0,0};
+      // Complex lComplex{0,0};
       std::vector<bool> lMandelHeightVect (aScreenHeight);
       double lH;
       double lW = centre.first -0.5 * numWidth +  dW * offset / Concurrency; //ensures correct starting point
@@ -112,8 +112,8 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
           for (int heightIter = 0; heightIter < aScreenHeight; heightIter++, lH += dH)
           {
             //construct complex number
-            lComplex = Complex{lW, lH};
-            lMandelHeightVect[heightIter] = isMandelBrot(lComplex);
+            // lComplex = Complex{lW, lH};
+            lMandelHeightVect[heightIter] =  isMandelBrot(Complex{lW, lH});;
           }
           //render
           lineRender(aRenderer, lMandelHeightVect, widthIter);
