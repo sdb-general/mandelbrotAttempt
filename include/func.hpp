@@ -20,4 +20,4 @@ struct StopWatch
 
 void lineRender(SDL_Renderer* aRenderer, std::vector<bool>& aMandel, int& aDisplacement);
 
-void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const double PIXELSCALEFACTOR, const double numWidth, const std::pair<double, double> centre);
+void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const double PIXELSCALEFACTOR, const double numWidth, const std::pair<double, double> centre, const int aMaxIters);

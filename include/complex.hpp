@@ -23,4 +23,4 @@ struct Complex{
   };
 
 
-bool isMandelBrot(const Complex& aComplex);
+bool isMandelBrot(const Complex& aComplex, const int aMaxIters);

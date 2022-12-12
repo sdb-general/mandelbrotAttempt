@@ -52,10 +52,10 @@ double Complex::absolute() const{
 
 
 
-bool isMandelBrot(const Complex& aComplex){
+bool isMandelBrot(const Complex& aComplex, const int aMaxIters){
   Complex lComplex{}, lLastComplex{};
   int lIter = 0;
-  while ( (lIter < gMaxIters) and (lComplex.absolute() < 4))
+  while ( (lIter < aMaxIters) and (lComplex.absolute() < 4))
   {    
     lComplex = lLastComplex * lLastComplex; //starts at 0, this performs iterative step
     lComplex += aComplex;

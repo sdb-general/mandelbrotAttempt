@@ -30,7 +30,9 @@ int main(int argc, const char *argv[])
       ("zoom", value<double>()->default_value(3), "Zoom" )
       ("sw", value<int>() -> default_value(1600), "Screen Width")
       ("sh", value<int>() -> default_value(900), "Screen Height")
-      ("scale", value<double>()->default_value(1.0), "Scale" );
+      ("iters", value<int>() -> default_value(500), "Iterations")
+      ("scale", value<double>()->default_value(1.0), "Scale" )
+      ;
 
     
     store(parse_command_line(argc, argv, desc), vm);
@@ -59,6 +61,8 @@ SETTING CONFIGS ----------------------------------------------------------------
   const int screenHeight = vm["sh"].as<int>()% 2 == 0 ? vm["sh"].as<int>() : vm["sh"].as<int>() + 1;
 
   const double PIXELSCALEFACTOR = vm["scale"].as<double>();
+  
+  const int maxIters = vm["iters"].as<int>();
 
 /*
 
@@ -90,7 +94,7 @@ RENDERING ----------------------------------------------------------------------
 
 
 
-  mandelDraw(lRenderer, screenWidth, screenHeight, PIXELSCALEFACTOR, numWidth, centre);
+  mandelDraw(lRenderer, screenWidth, screenHeight, PIXELSCALEFACTOR, numWidth, centre, maxIters);
 
   bool quit = false;
   while (quit == false){

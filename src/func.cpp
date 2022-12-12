@@ -103,7 +103,7 @@ void blockRender(SDL_Renderer* aRenderer, std::vector<std::vector<bool>>& aScree
 
 
 // this function is where it all happens
-void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const double PIXELSCALEFACTOR, const double numWidth, const std::pair<double, double> centre)
+void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aScreenHeight, const double PIXELSCALEFACTOR, const double numWidth, const std::pair<double, double> centre, const int aMaxIters)
 {
   StopWatch s = StopWatch("Mandeldraw");
   
@@ -136,7 +136,7 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
           lH = centre.second -0.5 * numWidth;
           for (int heightIter = 0; heightIter < lScaledHeight; heightIter++, lH += dH)
           {
-            lScreen[widthIter][heightIter] =  isMandelBrot(Complex{lW, lH});;
+            lScreen[widthIter][heightIter] =  isMandelBrot(Complex{lW, lH}, aMaxIters);;
           }
         };
     

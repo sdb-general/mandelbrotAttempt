@@ -10,6 +10,11 @@ This branch can accept some command-line arguments, such as below:
 
 ```./game.exe --centrex -0.68 --centrey -0.2995 --zoom 0.001```
 
+The most recent change enables the use of the ```--scale``` argument - values greater than 1 will reduce the quality (and evaluation time)
+It's pretty rudimentary, but removes the need to calculate one set of iterations per pixel.
+
+We can also set the max number of iterations using ```--iters```. default value is 500.
+
 There is lots to do, still, namely:
 
   Tidy up and refactor everything 
@@ -20,4 +25,6 @@ There is lots to do, still, namely:
 
   Optimise calculation of Mandelbrot numbers 
 
-  In particular - refactor to avoid calculating one Mandelbrot number for each pixel.
+  add in SIMD  calculations to speed up evaluation
+
+  the real thing adds a colour proportional to the number of iters required - this requires a little refactoring and a map from int -> rgb
