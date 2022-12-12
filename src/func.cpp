@@ -112,8 +112,6 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
   const int lScaledHeight = aScreenHeight / PIXELSCALEFACTOR + 1;
   const int lScaledWidth = aScreenWidth / PIXELSCALEFACTOR + 1; //trying to fix the end - of - array problem
 
-  std::cout << lScaledHeight << " " << lScaledWidth << "\n";
-
   std::vector<std::vector<bool>> lScreen (
     lScaledWidth, std::vector<bool>(lScaledHeight) 
   );
