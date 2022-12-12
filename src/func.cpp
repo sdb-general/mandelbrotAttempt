@@ -95,7 +95,7 @@ void blockRender(SDL_Renderer* aRenderer, std::vector<std::vector<bool>>& aScree
   for (int w = 0 ; w < aScreenWidth; w ++)
     for (int h = 0; h < aScreenHeight; h ++)
     {
-      //scale back up!
+      // ensure correct scaling!
       if (aScreen[w / PIXELSCALEFACTOR][h / PIXELSCALEFACTOR]) SDL_RenderDrawPoint(aRenderer, w, h);
     }
 
@@ -112,6 +112,8 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
   const int lScaledHeight = aScreenHeight / PIXELSCALEFACTOR + 1;
   const int lScaledWidth = aScreenWidth / PIXELSCALEFACTOR + 1; //trying to fix the end - of - array problem
 
+  std::cout << lScaledHeight << " " << lScaledWidth << "\n";
+
   std::vector<std::vector<bool>> lScreen (
     lScaledWidth, std::vector<bool>(lScaledHeight) 
   );
@@ -124,7 +126,8 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
   {
     boost::asio::post( pool, [&, offset](){
 
-      std::cout << offset << "\n";
+    //lambda starts here -----------------------------------------------------------------------------
+
       std::vector<bool> lMandelHeightVect (lScaledHeight);
       double lH;
       double lW = centre.first -0.5 * numWidth +  dW * offset / Concurrency; //ensures correct starting point
@@ -136,6 +139,9 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
             lScreen[widthIter][heightIter] =  isMandelBrot(Complex{lW, lH});;
           }
         };
+    
+    //lambda ends here -------------------------------------------------------------------------------
+
       }
     );
   }
