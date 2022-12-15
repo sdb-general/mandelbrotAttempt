@@ -28,3 +28,5 @@ There is lots to do, still, namely:
   add in SIMD  calculations to speed up evaluation
 
   the real thing adds a colour proportional to the number of iters required - this requires a little refactoring and a map from int -> rgb
+
+  Refactor to use an SDL surface instead of passing the renderer around as this is a real bottleneck
