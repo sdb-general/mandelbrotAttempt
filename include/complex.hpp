@@ -20,7 +20,7 @@ struct Complex{
     void display() const;
 
     double absolute() const;
-  };
+};
 
 
 bool isMandelBrot(const Complex& aComplex, const int aMaxIters);
