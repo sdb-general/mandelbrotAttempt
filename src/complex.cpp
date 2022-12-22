@@ -66,3 +66,9 @@ bool isMandelBrot(const Complex& aComplex, const int aMaxIters){
   return (lComplex.absolute() < 4);
 }
 
+
+bool isMandelBrot(const double& aReal, const double& aImag, const int aMaxIters)
+{
+
+}
+
