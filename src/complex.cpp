@@ -59,7 +59,7 @@ bool isMandelBrot(const Complex& aComplex, const int aMaxIters){
   {    
     lComplex = lLastComplex * lLastComplex; //starts at 0, this performs iterative step
     lComplex += aComplex;
-    if ((lComplex - lLastComplex).absolute() < 1E-7) break;
+    // if ((lComplex - lLastComplex).absolute() < 1E-7) break; // < ------ this turns out to be very expensive
     lLastComplex = lComplex;  
     lIter++;
   }
