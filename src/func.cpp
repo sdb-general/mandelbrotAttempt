@@ -80,7 +80,7 @@ void mandelDraw ( SDL_Renderer* aRenderer, const int aScreenWidth, const int aSc
       lH = centre.second -0.5 * numWidth;
       for (int heightIter = 0; heightIter < lScaledHeight; heightIter++, lH += dH)
       {
-        lScreen[widthIter][heightIter] =  isMandelBrot(Complex{lW, lH}, aMaxIters);;
+        lScreen[widthIter][heightIter] =  isMandelBrot(lW, lH, aMaxIters);;
       }
     }
 
