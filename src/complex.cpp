@@ -2,8 +2,9 @@
 #include "../include/complex.hpp"
 #include <cmath>
 
+#include <xmmintrin.h>
 
-const int gMaxIters = 500;
+__m128d a;
 
 
 Complex::Complex(double aReal, double aImag) : 
