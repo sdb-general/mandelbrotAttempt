@@ -59,10 +59,31 @@ bool isMandelBrot(const Complex& aComplex, const int aMaxIters){
   {    
     lComplex = lLastComplex * lLastComplex; //starts at 0, this performs iterative step
     lComplex += aComplex;
-    // if ((lComplex - lLastComplex).absolute() < 1E-7) break; // < ------ this turns out to be very expensive
+    // if ((lComplex - lLastComplex).absolute() < 1E-7) break;
     lLastComplex = lComplex;  
     lIter++;
   }
   return (lComplex.absolute() < 4);
+}
+
+
+bool isMandelBrot(const double& aReal, const double& aImag, const int aMaxIters)
+{
+  double zR(0), zI(0);
+  double lTempReal;
+  int lIter = 0;
+  // auto isTooLarge = [&](double aZI, double aZR){ return (aZI * aZI + aZR * aZR) < 4 ;};
+  while ( (lIter < aMaxIters) and ( (zR * zR + zI * zI) < 4 ) )
+  // while ( (lIter < aMaxIters) and ( isTooLarge(zR, zI) ) )
+  {
+    lTempReal = zR;
+    zR = zR * zR - zI * zI + aReal;
+    zI = 2 * lTempReal * zI + aImag;
+
+    lIter++;
+  }
+
+  // return isTooLarge(zR, zI);
+  return ( (zR * zR + zI * zI) < 4 );
 }
 

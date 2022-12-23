@@ -24,3 +24,6 @@ struct Complex{
 
 
 bool isMandelBrot(const Complex& aComplex, const int aMaxIters);
+
+
+bool isMandelBrot(const double& aReal, const double& aImag, const int aMaxIters);
