@@ -52,7 +52,7 @@ double Complex::absolute() const{
 }
 
 
-
+//determines if the given point should be coloured in
 bool isMandelBrot(const Complex& aComplex, const int aMaxIters){
   Complex lComplex{}, lLastComplex{};
   int lIter = 0;
@@ -67,7 +67,7 @@ bool isMandelBrot(const Complex& aComplex, const int aMaxIters){
   return (lComplex.absolute() < 4);
 }
 
-
+//determines if the given point should be coloured in
 bool isMandelBrot(const double& aReal, const double& aImag, const int aMaxIters)
 {
   double zR(0), zI(0);

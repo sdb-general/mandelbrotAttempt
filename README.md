@@ -2,8 +2,6 @@
 
 Here is a short test project to generate a plot of the Mandelbrot set, just to familiarise myself with SDL. Checkout the multithreading branch for most effective runthrough
 
-This branch is a little messy, but will utilise all the available threads.
-
 The included Makefile should put together the executable. Just type ```make```.
 
 This branch can accept some command-line arguments, such as below:
