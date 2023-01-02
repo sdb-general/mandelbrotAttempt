@@ -23,8 +23,6 @@ There is lots to do, still, namely:
 
   Move the threadpool to a separate file 
 
-  Optimise calculation of Mandelbrot numbers 
-
   add in SIMD  calculations to speed up evaluation
 
   the real thing adds a colour proportional to the number of iters required - this requires a little refactoring and a map from int -> rgb
